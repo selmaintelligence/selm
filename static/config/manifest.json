@@ -3,6 +3,8 @@
   "short_name": "Selm",
   "start_url": "../../index.html",
   "display": "standalone",
+  "scope": "/",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
@@ -16,5 +18,17 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.example.selm",
+      "id": "com.example.selm"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://itunes.apple.com/app/example-selm/id123456789"
+    }
+  ],
+  "prefer_related_applications": false
 }
