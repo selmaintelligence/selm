@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="">
+    <meta name="keywords" content="chat app, selm, artificial intelligence">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SelmAI Team">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Advanced Responsive Chat Application">
+    <meta property="og:description" content="A feature-rich, responsive chat interface supporting real-time messaging and file sharing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://selmai.pythonanywhere.com/">
+    <meta property="og:image" content="https://selmai.pythonanywhere.com/static/images/chat-thumbnail.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Responsive Chat Interface">
+    <meta name="twitter:description" content="A sleek, feature-rich chat interface with AI integration and public modes.">
+    <meta name="twitter:image" content="https://selmai.pythonanywhere.com/chat-thumbnail.png">
+
+    <!-- manifest app config for mobile devices -->
+    <link rel="manifest" href="static/config/manifest.json">
+    
+    <!-- favicon.ico -->
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="static/css/index.css">
+    
+    <!-- Title -->
+    <title>Selm (Small Efficient Learning Model)</title>
+</head>
+<body>
+
+    <!-- Container for the entire chat application -->
+    <div id="chat-app-container">
+        
+        <!-- Chat window container for "selm" and "public" modes -->
+        <div id="chat-window">
+            <!-- Placeholder for chat messages -->
+            <div id="chat-messages" class="chat-content">
+                <!-- Messages will be populated here -->
+            </div>
+        </div>
+
+        <!-- Input container: text box and buttons -->
+        <div id="chat-input-container">
+
+            <!-- Input box for entering chat messages -->
+            <div id="chat-input-box">
+                <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off">
+            </div>
+
+            <!-- Button container: holds all buttons below the input box -->
+            <div id="chat-button-container">
+                <!-- Button for switching between light and dark mode -->
+                <button id="view-mode-button" class="chat-btn">Dark Mode</button>
+            
+                <!-- Button for file upload attachments -->
+                <button id="file-upload-button" class="chat-btn">Upload</button>
+                <input type="file" id="fileUpload" style="display: none;" />
+            
+                <!-- Button for switching between 'selm' and 'public' chat modes -->
+                <button id="switch-chat-button" class="chat-btn">Selm Chat</button>
+            
+                <!-- Button for copying the chat conversation to clipboard -->
+                <button id="copy-chat-button" class="chat-btn">Copy</button>
+            
+                <!-- Send button for sending the message -->
+                <button id="send-message-button" class="chat-btn">Send</button>
+            </div>
+
+
+        </div>
+
+    </div>
+    <script type="module" src="static/js/index.js"></script>
+</body>
+</html>

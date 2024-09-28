@@ -1,0 +1,147 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Light background for a clean look */
+    color: #333; /* Dark text color for contrast */
+    height: 100vh; /* Full height of the viewport */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    width: 100vw; /* Full width of the viewport */
+    overflow: hidden;
+}
+
+/* Main chat app container */
+#chat-app-container {
+    flex: 1; /* Take full height available */
+    display: flex;
+    flex-direction: column; /* Stack chat window and input box vertically */
+    width: 100%; /* Full width */
+    background-color: #ffffff; /* White background for the chat */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden; /* Prevent overflow of children */
+}
+
+/* Chat window */
+#chat-window {
+    flex: 1; /* Allow the chat window to grow */
+    overflow-y: auto; /* Enable scrolling for messages */
+    padding: 20px; /* Padding around messages */
+    background-color: #f9f9f9; /* Slightly darker background for contrast */
+}
+
+/* Chat messages area */
+#chat-messages {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Chat input container */
+#chat-input-container {
+    display: flex;
+    flex-direction: column; /* Stack input box and button container vertically */
+    background-color: #ffffff; /* Match the chat app background */
+    border-top: 1px solid #eaeaea; /* Subtle border for separation */
+    padding: 1px; /* Padding for input box and buttons */
+    width: 100%; /* Ensure full width */
+}
+
+/* Input box styles */
+#chat-input-box {
+    margin-bottom: 1px; /* Space between input box and buttons */
+    width: 100%; /* Full width of the container */
+}
+
+#message-input {
+    width: 100%; /* Full width of the container */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for readability */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s; /* Smooth transition for focus effect */
+    min-height: 40px; /* Minimum height for the input box */
+}
+
+#message-input:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+}
+
+/* Button container styles */
+#chat-button-container {
+    display: flex;
+    flex-direction: row; /* Keep buttons in a row */
+    justify-content: space-between; /* Distribute space evenly */
+    width: 100%; /* Full width for button container */
+}
+
+/* Button styles */
+.chat-btn {
+    background-color: #007bff; /* Primary button color */
+    border: none; /* Remove default border */
+    border-radius: 0px; /* Remove rounding */
+    color: white; /* White text for buttons */
+    flex: 1; /* Allow buttons to grow and fill the space */
+    padding: 10px; /* Padding for buttons */
+    margin: 0; /* Remove margin between buttons */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.chat-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Ensure buttons appear as a solid unit */
+.chat-btn:not(:first-child) {
+    border-left: 1px solid white; /* Add a white border between buttons */
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #333; /* Dark background for dark mode */
+    color: #f4f4f9; /* Light text color for contrast */
+}
+
+body.dark-mode #chat-app-container {
+    background-color: #444; /* Darker chat app background */
+}
+
+body.dark-mode #chat-window {
+    background-color: #555; /* Darker background for chat window */
+}
+
+body.dark-mode #chat-input-container {
+    background-color: #666; /* Darker input container */
+    border-top-color: #777; /* Darker border color */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    #chat-app-container {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    #chat-input-container {
+        flex-direction: column; /* Stack input and button container vertically */
+        align-items: stretch; /* Stretch items to full width */
+    }
+
+    #chat-button-container {
+        flex-direction: row; /* Keep buttons in a row */
+        justify-content: space-between; /* Distribute space evenly */
+    }
+
+    .chat-btn {
+        flex: 1; /* Allow buttons to grow and fill the space */
+        margin: 0; /* Remove margins between buttons */
+    }
+}
