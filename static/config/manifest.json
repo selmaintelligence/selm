@@ -1,9 +1,9 @@
 {
   "name": "Small Efficient Learning Model",
   "short_name": "Selm",
-  "start_url": "../../index.html",
+  "start_url": "/selm/index.html",  // Direct path for your PWA hosted on GitHub Pages
   "display": "standalone",
-  "scope": "/",
+  "scope": "/selm/",  // Defines the navigation scope to your app's base path
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#000000",
@@ -30,5 +30,26 @@
       "url": "https://itunes.apple.com/app/example-selm/id123456789"
     }
   ],
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Submit a prompt",
+      "short_name": "Submit",
+      "description": "Quick access to input a prompt",
+      "url": "/selm/index.html#submit",
+      "icons": [
+        {
+          "src": "/static/images/submit-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "name": "notifications",
+      "description": "Allows the web app to send notifications for updates or messages",
+      "default": "granted"
+    }
+  ]
 }
