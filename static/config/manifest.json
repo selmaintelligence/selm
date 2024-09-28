@@ -1,55 +1,35 @@
 {
-  "name": "Small Efficient Learning Model",
-  "short_name": "Selm",
-  "start_url": "/selm/index.html",  // Path to the index.html hosted on GitHub Pages
+  "name": "Selm Chat Application",
+  "short_name": "SelmAI",
+  "description": "A sleek, modern chat interface with AI integration, light/dark modes, and responsive design.",
+  "start_url": "/selm/",
+  "scope": "/selm/",
   "display": "standalone",
-  "scope": "/selm/",  // Scope limited to everything within /selm/ directory
+  "background_color": "#f4f4f9",
+  "theme_color": "#007bff",
   "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
   "icons": [
     {
-      "src": "/selm/static/images/android-chrome-192x192.png",  // Correct path to the icon
+      "src": "https://selmaintelligence.github.io/selm/static/images/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/selm/static/images/android-chrome-512x512.png",  // Correct path to the larger icon
+      "src": "https://selmaintelligence.github.io/selm/static/images/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
-    }
-  ],
-  "related_applications": [
-    {
-      "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.example.selm",
-      "id": "com.example.selm"
     },
     {
-      "platform": "itunes",
-      "url": "https://itunes.apple.com/app/example-selm/id123456789"
+      "src": "https://selmaintelligence.github.io/selm/static/images/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://selmaintelligence.github.io/selm/static/images/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
     }
   ],
-  "prefer_related_applications": false,
-  "shortcuts": [
-    {
-      "name": "Submit a prompt",
-      "short_name": "Submit",
-      "description": "Quick access to input a prompt",
-      "url": "/selm/index.html#submit",
-      "icons": [
-        {
-          "src": "/selm/static/images/submit-icon.png",
-          "sizes": "96x96"
-        }
-      ]
-    }
-  ],
-  "permissions": [
-    {
-      "name": "notifications",
-      "description": "Allows the web app to send notifications for updates or messages",
-      "default": "granted"
-    }
-  ]
+  "related_applications": [],
+  "prefer_related_applications": false
 }
