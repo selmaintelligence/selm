@@ -6,12 +6,10 @@ export function initChat() {
     const copyChatButton = document.getElementById('copy-chat-button'); // Reference to the copy button
     const switchChatButton = document.getElementById('switch-chat-button'); // Reference to the switch chat button
     const viewModeButton = document.getElementById('view-mode-button'); // Reference to the view mode button
-    const gameModeButton = document.getElementById('game-mode-button'); // Reference to the game mode button
 
     let currentChatMode = 'public'; // Track the current chat mode
     let publicChatMessages = []; // Array to hold public chat messages
     let selmChatMessages = []; // Array to hold SELM chat messages
-    let inGameMode = false; // Track whether we are in game mode
 
     // Function to handle commands that start with a period
     function handleCommand(message) {
@@ -122,24 +120,6 @@ export function initChat() {
         viewModeButton.innerText = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
     }
 
-    // Function to toggle game mode
-    function toggleGameMode() {
-        const gameInterface = document.getElementById('game-interface'); // Assuming a div with this ID
-        const chatContainer = document.getElementById('chat-container'); // Assuming a div with this ID
-
-        if (inGameMode) {
-            gameInterface.style.display = 'none'; // Hide game interface
-            chatContainer.style.display = 'block'; // Show chat container
-            gameModeButton.innerText = 'Enter Game Mode'; // Change button text back
-        } else {
-            gameInterface.style.display = 'block'; // Show game interface
-            chatContainer.style.display = 'none'; // Hide chat container
-            gameModeButton.innerText = 'Exit Game Mode'; // Change button text
-        }
-
-        inGameMode = !inGameMode; // Toggle the state
-    }
-
     // Event listener for sending message on button click
     sendButton.addEventListener('click', sendMessage);
 
@@ -164,7 +144,4 @@ export function initChat() {
 
     // Add event listener for the view mode button (Dark/Light mode toggle)
     viewModeButton.addEventListener('click', toggleViewMode);
-
-    // Add event listener for the game mode button
-    gameModeButton.addEventListener('click', toggleGameMode);
 }
