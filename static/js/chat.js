@@ -3,7 +3,6 @@ export function initChat() {
     const sendButton = document.getElementById('send-message-button');
     const fileUploadButton = document.getElementById('file-upload-button');
     const fileInput = document.getElementById('fileUpload');
-    const copyChatButton = document.getElementById('copy-chat-button');
     const switchChatButton = document.getElementById('switch-chat-button');
     const viewModeButton = document.getElementById('view-mode-button');
     const chatMessages = document.getElementById('chat-messages');
@@ -53,16 +52,6 @@ export function initChat() {
         messageInput.value = '';
     };
 
-    const copyChatToClipboard = () => {
-        const chatText = Array.from(chatMessages.children)
-            .map(messageDiv => messageDiv.innerText)
-            .join('\n');
-
-        navigator.clipboard.writeText(chatText)
-            .then(() => console.log('Chat copied to clipboard!'))
-            .catch(err => console.error('Failed to copy:', err));
-    };
-
     const switchChatMode = () => {
         currentChatMode = currentChatMode === 'public' ? 'selm' : 'public';
         switchChatButton.innerText = currentChatMode === 'public' ? 'Selm Chat' : 'Public Chat';
@@ -89,7 +78,6 @@ export function initChat() {
     });
 
     fileUploadButton.addEventListener('click', () => fileInput.click());
-    copyChatButton.addEventListener('click', copyChatToClipboard);
     switchChatButton.addEventListener('click', switchChatMode);
     viewModeButton.addEventListener('click', toggleViewMode);
 }
