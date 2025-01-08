@@ -19,12 +19,17 @@ export function initChat() {
         messageDiv.innerText = `${mode === 'public' ? 'Public' : 'Selm'}: ${message}`;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+
         chatHistory[mode].push(message);
     };
 
     const handleMessage = async (message) => {
+        const isCommand = message.startsWith('.');
         const encodedMessage = encodeURIComponent(message.trim());
-        const url = `https://selmai.pythonanywhere.com/?message=${encodedMessage}`;
+
+        const url = isCommand
+            ? `https://selmai.pythonanywhere.com/?type=command&name=${encodedMessage.slice(1)}`
+            : `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
 
         try {
             const response = await fetch(url);
@@ -35,7 +40,7 @@ export function initChat() {
 
             appendMessage(currentChatMode, data.processed_message);
         } catch (error) {
-            console.error('Error processing message:', error.message);
+            console.error(isCommand ? 'Error processing command:' : 'Error sending chat message:', error.message);
             appendMessage(currentChatMode, `Error: ${error.message}`);
         }
     };
