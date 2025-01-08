@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Executor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Module Executor</h1>
+        <div id="module-list">
+            <button id="load-modules">Load Modules</button>
+            <ul id="modules"></ul>
+        </div>
+        <div id="module-execution">
+            <h2>Execute Module</h2>
+            <label for="module-name">Module Name:</label>
+            <input type="text" id="module-name" placeholder="Enter module name" />
+            <label for="arguments">Arguments (comma-separated):</label>
+            <input type="text" id="arguments" placeholder="arg1, arg2, ..." />
+            <button id="execute-module">Execute</button>
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
