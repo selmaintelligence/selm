@@ -23,27 +23,33 @@ export function initChat() {
         chatHistory[mode].push(message);
     };
 
+    const handleMessage = async (message) => {
+        const isCommand = message.startsWith('.');
+        const encodedMessage = encodeURIComponent(message.trim());
+
+        const url = isCommand
+            ? `https://selmai.pythonanywhere.com/?type=command&name=${encodedMessage.slice(1)}`
+            : `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+            const data = await response.json();
+            if (!data || typeof data.processed_message !== 'string') throw new Error('Invalid response format');
+
+            appendMessage(currentChatMode, data.processed_message);
+        } catch (error) {
+            console.error(isCommand ? 'Error processing command:' : 'Error sending chat message:', error.message);
+            appendMessage(currentChatMode, `Error: ${error.message}`);
+        }
+    };
+
     const sendMessage = () => {
         const message = messageInput.value.trim();
         if (!message) return alert('Message cannot be empty!');
-
-        const encodedMessage = encodeURIComponent(message);
-        const url = `https://selmai.pythonanywhere.com/?content=${encodedMessage}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data && typeof data.processed_message === 'string') {
-                    appendMessage(currentChatMode, data.processed_message);
-                } else {
-                    appendMessage(currentChatMode, 'Error processing message.');
-                }
-            })
-            .catch(error => {
-                console.error('Error sending message:', error);
-                appendMessage(currentChatMode, 'Error: Could not send message.');
-            });
-
+        
+        handleMessage(message);
         messageInput.value = '';
     };
 
