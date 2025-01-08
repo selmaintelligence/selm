@@ -107,7 +107,7 @@ body {
 
 /* Dark mode styles */
 body.dark-mode {
-    background-color: #333; /* Dark background for dark mode */
+    background-color: #212436; /* Dark background for dark mode */
     color: #f4f4f9; /* Light text color for contrast */
 }
 
