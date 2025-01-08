@@ -107,21 +107,21 @@ body {
 
 /* Dark mode styles */
 body.dark-mode {
-    background-color: #212436; /* Dark background for dark mode */
+    background-color: #111; /* Dark background for dark mode */
     color: #f4f4f9; /* Light text color for contrast */
 }
 
 body.dark-mode #chat-app-container {
-    background-color: #444; /* Darker chat app background */
+    background-color: #222; /* Darker chat app background */
 }
 
 body.dark-mode #chat-window {
-    background-color: #555; /* Darker background for chat window */
+    background-color: #333; /* Darker background for chat window */
 }
 
 body.dark-mode #chat-input-container {
-    background-color: #666; /* Darker input container */
-    border-top-color: #777; /* Darker border color */
+    background-color: #444; /* Darker input container */
+    border-top-color: #555; /* Darker border color */
 }
 
 /* Responsive design */
