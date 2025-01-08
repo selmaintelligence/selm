@@ -8,8 +8,10 @@ export function initChat() {
     const chatMessages = document.getElementById('chat-messages');
 
     let currentChatMode = 'public';
-    let publicChatMessages = [];
-    let selmChatMessages = [];
+    const chatHistory = {
+        public: [],
+        selm: [],
+    };
 
     const appendMessage = (mode, message) => {
         const messageDiv = document.createElement('div');
@@ -18,12 +20,16 @@ export function initChat() {
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        (mode === 'public' ? publicChatMessages : selmChatMessages).push(message);
+        chatHistory[mode].push(message);
     };
 
-    const handleCommand = async (message) => {
-        const [commandName, ...commandParams] = message.split(' ');
-        const url = `https://selmai.pythonanywhere.com/?type=command&name=${encodeURIComponent(commandName.slice(1))}&params=${encodeURIComponent(commandParams.join(' '))}`;
+    const handleMessage = async (message) => {
+        const isCommand = message.startsWith('.');
+        const encodedMessage = encodeURIComponent(message.trim());
+
+        const url = isCommand
+            ? `https://selmai.pythonanywhere.com/?type=command&name=${encodedMessage.slice(1)}`
+            : `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
 
         try {
             const response = await fetch(url);
@@ -34,7 +40,7 @@ export function initChat() {
 
             appendMessage(currentChatMode, data.processed_message);
         } catch (error) {
-            console.error('Error processing command:', error.message);
+            console.error(isCommand ? 'Error processing command:' : 'Error sending chat message:', error.message);
             appendMessage(currentChatMode, `Error: ${error.message}`);
         }
     };
@@ -43,12 +49,7 @@ export function initChat() {
         const message = messageInput.value.trim();
         if (!message) return alert('Message cannot be empty!');
         
-        if (message.startsWith('.')) {
-            handleCommand(message);
-        } else {
-            appendMessage(currentChatMode, message);
-        }
-
+        handleMessage(message);
         messageInput.value = '';
     };
 
@@ -56,12 +57,12 @@ export function initChat() {
         currentChatMode = currentChatMode === 'public' ? 'selm' : 'public';
         switchChatButton.innerText = currentChatMode === 'public' ? 'Selm Chat' : 'Public Chat';
         messageInput.placeholder = `Type your message for ${currentChatMode} chat...`;
-        loadChatHistory(currentChatMode === 'public' ? publicChatMessages : selmChatMessages);
+        loadChatHistory();
     };
 
-    const loadChatHistory = (messages) => {
+    const loadChatHistory = () => {
         chatMessages.innerHTML = '';
-        messages.forEach(message => appendMessage(currentChatMode, message));
+        chatHistory[currentChatMode].forEach(message => appendMessage(currentChatMode, message));
     };
 
     const toggleViewMode = () => {
