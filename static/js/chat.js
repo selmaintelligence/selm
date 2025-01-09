@@ -27,9 +27,14 @@ export function initChat() {
         const isCommand = message.startsWith('.');
         const encodedMessage = encodeURIComponent(message.trim());
 
-        const url = isCommand
-            ? `https://selmai.pythonanywhere.com/?type=command&name=${encodedMessage.slice(1)}`
-            : `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
+        let url = '';
+        if (isCommand) {
+            const [commandName, ...commandArgs] = encodedMessage.slice(1).split(' ');  // Split message into command and arguments
+            const encodedArgs = encodeURIComponent(commandArgs.join(' '));  // Join arguments back into a single string
+            url = `https://selmai.pythonanywhere.com/?type=command&name=${commandName}&args=${encodedArgs}`;
+        } else {
+            url = `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
+        }
 
         try {
             const response = await fetch(url);
