@@ -33,7 +33,7 @@ export function initChat() {
             const encodedArgs = encodeURIComponent(commandArgs.join(' '));  // Join arguments back into a single string
             url = `https://selmai.pythonanywhere.com/?type=command&name=${commandName}&args=${encodedArgs}`;
         } else {
-            url = `https://selmai.pythonanywhere.com/?type=chat&content=${encodedMessage}`;
+            url = `https://selmai.pythonanywhere.com/?type=chat&mode=${currentChatMode}&content=${encodedMessage}`;
         }
 
         try {
