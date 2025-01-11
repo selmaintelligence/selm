@@ -25,7 +25,7 @@ export function initChat() {
 
     const handleMessage = async (message) => {
         const encodedMessage = encodeURIComponent(message);
-        const [commandName, ...commandArgs] = encodedMessage.slice(1).split(' ');
+        const [commandName, commandArgs] = encodedMessage.slice(1).split(' ');
         const encodedArgs = encodeURIComponent(commandArgs.join(' '));
         const url = `https://selmai.pythonanywhere.com/?name=${commandName}&args=${encodedArgs}`;
 
