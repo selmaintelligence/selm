@@ -7,6 +7,8 @@ export function initChat() {
     const chatMessages = document.getElementById('chat-messages');
 
     const chatHistory = [];
+    const userMessages = []; // Stores user messages
+    const userCommands = []; // Stores user commands
 
     const appendMessage = (message) => {
         const messageDiv = document.createElement('div');
@@ -22,24 +24,45 @@ export function initChat() {
         const trimmedMessage = message.trim();
         const [commandName, ...commandArgs] = trimmedMessage.split(' ');
 
-        if (commandName) {
-            const encodedArgs = encodeURIComponent(commandArgs.join(' '));
-            const url = `https://selmai.pythonanywhere.com/?name=${encodeURIComponent(commandName)}&args=${encodedArgs}`;
+        if (!commandName) {
+            return appendMessage(trimmedMessage);
+        }
 
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+        // Handle local commands
+        if (commandName === '!chat') {
+            const allMessages = userMessages.join('\n');
+            appendMessage(`Stored Messages:\n${allMessages || 'No messages found.'}`);
+            return;
+        }
 
-                const data = await response.json();
-                if (!data || typeof data.processed_message !== 'string') throw new Error('Invalid response format');
+        if (commandName === '!commands') {
+            const allCommands = userCommands.join('\n');
+            appendMessage(`Stored Commands:\n${allCommands || 'No commands found.'}`);
+            return;
+        }
 
-                appendMessage(data.processed_message);
-            } catch (error) {
-                console.error('Error processing command:', error.message);
-                appendMessage(`Error: ${error.message}`);
-            }
+        // Store messages or commands based on first char of the first token
+        if (commandName.startsWith('.')) {
+            userCommands.push(trimmedMessage);
         } else {
-            appendMessage(trimmedMessage);
+            userMessages.push(trimmedMessage);
+        }
+
+        // Process remote commands
+        const encodedArgs = encodeURIComponent(commandArgs.join(' '));
+        const url = `https://selmai.pythonanywhere.com/?name=${encodeURIComponent(commandName)}&args=${encodedArgs}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+            const data = await response.json();
+            if (!data || typeof data.processed_message !== 'string') throw new Error('Invalid response format');
+
+            appendMessage(data.processed_message);
+        } catch (error) {
+            console.error('Error processing command:', error.message);
+            appendMessage(`Error: ${error.message}`);
         }
     };
 
