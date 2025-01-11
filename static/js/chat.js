@@ -16,7 +16,7 @@ export function initChat() {
     const appendMessage = (mode, message) => {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message';
-        messageDiv.innerText = `${mode === 'public' ? 'Public' : 'Selm'}: ${message}`;
+        messageDiv.innerText = ${mode === 'public' ? 'Public' : 'Selm'}: ${message};
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -24,29 +24,31 @@ export function initChat() {
     };
 
     const handleMessage = async (message) => {
+        const isCommand = message.startsWith('.');
         const encodedMessage = encodeURIComponent(message.trim());
-        const [commandName, ...commandArgs] = encodedMessage.split(' ');
+
+        const [commandName, ...commandArgs] = encodedMessage.slice(1).split(' ');
         const encodedArgs = encodeURIComponent(commandArgs.join(' '));
-        const url = `https://selmai.pythonanywhere.com/?name=${commandName}&args=${encodedArgs}`;
+        const url = https://selmai.pythonanywhere.com/?name=${commandName}&args=${encodedArgs};
 
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+            if (!response.ok) throw new Error(Server responded with status ${response.status});
 
             const data = await response.json();
             if (!data || typeof data.processed_message !== 'string') throw new Error('Invalid response format');
 
             appendMessage(currentChatMode, data.processed_message);
         } catch (error) {
-            console.error('Error sending chat message:', error.message);
-            appendMessage(currentChatMode, `Error: ${error.message}`);
+            console.error(isCommand ? 'Error processing command:' : 'Error sending chat message:', error.message);
+            appendMessage(currentChatMode, Error: ${error.message});
         }
     };
 
     const sendMessage = () => {
         const message = messageInput.value.trim();
         if (!message) return alert('Message cannot be empty!');
-
+        
         handleMessage(message);
         messageInput.value = '';
     };
@@ -54,7 +56,7 @@ export function initChat() {
     const switchChatMode = () => {
         currentChatMode = currentChatMode === 'public' ? 'selm' : 'public';
         switchChatButton.innerText = currentChatMode === 'public' ? 'Selm Chat' : 'Public Chat';
-        messageInput.placeholder = `Type your message for ${currentChatMode} chat...`;
+        messageInput.placeholder = Type your message for ${currentChatMode} chat...;
         loadChatHistory();
     };
 
