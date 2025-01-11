@@ -24,11 +24,9 @@ export function initChat() {
     };
 
     const handleMessage = async (message) => {
-        const isCommand = message.startsWith('.');
-        const encodedMessage = encodeURIComponent(message.trim());
-
-        const [commandName, ...commandArgs] = encodedMessage.slice(1).split(' ');  // Split message into command and arguments
-        const encodedArgs = encodeURIComponent(commandArgs.join(' '));  // Join arguments back into a single string
+        const encodedMessage = encodeURIComponent(message);
+        const [commandName, ...commandArgs] = encodedMessage.slice(1).split(' ');
+        const encodedArgs = encodeURIComponent(commandArgs.join(' '));
         const url = `https://selmai.pythonanywhere.com/?name=${commandName}&args=${encodedArgs}`;
 
         try {
