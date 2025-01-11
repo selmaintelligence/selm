@@ -24,12 +24,10 @@ export function initChat() {
     };
 
     const handleMessage = async (message) => {
-        const isCommand = message.startsWith('.');
         const trimmedMessage = message.trim();
+        const [commandName, ...commandArgs] = trimmedMessage.split(' ');
 
-        if (isCommand) {
-            // Split the message into command name and arguments without removing the "."
-            const [commandName, ...commandArgs] = trimmedMessage.split(' ');
+        if (commandName) {
             const encodedArgs = encodeURIComponent(commandArgs.join(' '));
             const url = `https://selmai.pythonanywhere.com/?name=${encodeURIComponent(commandName)}&args=${encodedArgs}`;
 
@@ -46,13 +44,7 @@ export function initChat() {
                 appendMessage(currentChatMode, `Error: ${error.message}`);
             }
         } else {
-            try {
-                // Simply append non-command messages to the chat
-                appendMessage(currentChatMode, trimmedMessage);
-            } catch (error) {
-                console.error('Error sending chat message:', error.message);
-                appendMessage(currentChatMode, `Error: ${error.message}`);
-            }
+            appendMessage(currentChatMode, trimmedMessage);
         }
     };
 
