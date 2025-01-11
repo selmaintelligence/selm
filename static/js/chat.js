@@ -9,6 +9,9 @@ export function initChat() {
     const chatHistory = [];
     const userMessages = []; // Stores user messages
     const userCommands = []; // Stores user commands
+    let timer; // Timer reference for repeating the request
+    let isRegularChat = true; // Track whether the last message was a regular chat message
+    let currentTimerInterval = 10000; // Initial 10 seconds interval
 
     const appendMessage = (message) => {
         const messageDiv = document.createElement('div');
@@ -23,6 +26,13 @@ export function initChat() {
     const handleMessage = async (message) => {
         const trimmedMessage = message.trim();
         const [commandName, ...commandArgs] = trimmedMessage.split(' ');
+
+        // Reset the regular chat flag if a command is issued
+        if (commandName.startsWith('.')) {
+            isRegularChat = false;
+        } else {
+            isRegularChat = true;
+        }
 
         if (!commandName) {
             return appendMessage(trimmedMessage);
@@ -41,7 +51,7 @@ export function initChat() {
             return;
         }
 
-        // Store messages or commands based on first char of the first token
+        // Store messages or commands based on the first token
         if (commandName.startsWith('.')) {
             userCommands.push(trimmedMessage);
         } else {
@@ -72,11 +82,50 @@ export function initChat() {
 
         handleMessage(message);
         messageInput.value = '';
+        
+        // Check if the last message was a regular chat message and start the timer
+        if (isRegularChat && !timer) {
+            startRepeatingRequest();
+        }
     };
 
     const toggleViewMode = () => {
         document.body.classList.toggle('dark-mode');
         viewModeButton.innerText = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    };
+
+    const startRepeatingRequest = () => {
+        // Only start the timer if it isn't already running
+        if (timer) return;
+
+        // Send the request with the last 3 chat messages every `currentTimerInterval`
+        timer = setInterval(() => {
+            const lastThreeMessages = userMessages.slice(-3);
+            const encodedArgs = encodeURIComponent(lastThreeMessages.join('\n'));
+            const url = `https://selmai.pythonanywhere.com/?name=.chat&args=${encodedArgs}`;
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.processed_message) {
+                        appendMessage(data.processed_message); // Print data if received
+                        currentTimerInterval = 10000; // Reset to 10 seconds
+                    } else {
+                        // If no data is received, increase the timer by 5 seconds
+                        currentTimerInterval += 5000;
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error during polling:', error);
+                });
+        }, currentTimerInterval); // Timer interval
+    };
+
+    const stopRepeatingRequest = () => {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
     };
 
     // Initialize in dark mode
