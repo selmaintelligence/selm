@@ -24,8 +24,8 @@ export function initChat() {
     };
 
     const handleMessage = async (message) => {
-        const encodedMessage = encodeURIComponent(message);
-        const [commandName, commandArgs] = encodedMessage.slice(1).split(' ');
+        const encodedMessage = encodeURIComponent(message.trim());
+        const [commandName, ...commandArgs] = encodedMessage.split(' ');
         const encodedArgs = encodeURIComponent(commandArgs.join(' '));
         const url = `https://selmai.pythonanywhere.com/?name=${commandName}&args=${encodedArgs}`;
 
@@ -38,7 +38,7 @@ export function initChat() {
 
             appendMessage(currentChatMode, data.processed_message);
         } catch (error) {
-            console.error(isCommand ? 'Error processing command:' : 'Error sending chat message:', error.message);
+            console.error('Error sending chat message:', error.message);
             appendMessage(currentChatMode, `Error: ${error.message}`);
         }
     };
@@ -46,7 +46,7 @@ export function initChat() {
     const sendMessage = () => {
         const message = messageInput.value.trim();
         if (!message) return alert('Message cannot be empty!');
-        
+
         handleMessage(message);
         messageInput.value = '';
     };
