@@ -3,24 +3,19 @@ export function initChat() {
     const sendButton = document.getElementById('send-message-button');
     const fileUploadButton = document.getElementById('file-upload-button');
     const fileInput = document.getElementById('fileUpload');
-    const switchChatButton = document.getElementById('switch-chat-button');
     const viewModeButton = document.getElementById('view-mode-button');
     const chatMessages = document.getElementById('chat-messages');
 
-    let currentChatMode = 'public';
-    const chatHistory = {
-        public: [],
-        selm: [],
-    };
+    const chatHistory = [];
 
-    const appendMessage = (mode, message) => {
+    const appendMessage = (message) => {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message';
-        messageDiv.innerText = `${mode === 'public' ? 'Public' : 'Selm'}: ${message}`;
+        messageDiv.innerText = message;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        chatHistory[mode].push(message);
+        chatHistory.push(message);
     };
 
     const handleMessage = async (message) => {
@@ -38,13 +33,13 @@ export function initChat() {
                 const data = await response.json();
                 if (!data || typeof data.processed_message !== 'string') throw new Error('Invalid response format');
 
-                appendMessage(currentChatMode, data.processed_message);
+                appendMessage(data.processed_message);
             } catch (error) {
                 console.error('Error processing command:', error.message);
-                appendMessage(currentChatMode, `Error: ${error.message}`);
+                appendMessage(`Error: ${error.message}`);
             }
         } else {
-            appendMessage(currentChatMode, trimmedMessage);
+            appendMessage(trimmedMessage);
         }
     };
 
@@ -56,22 +51,14 @@ export function initChat() {
         messageInput.value = '';
     };
 
-    const switchChatMode = () => {
-        currentChatMode = currentChatMode === 'public' ? 'selm' : 'public';
-        switchChatButton.innerText = currentChatMode === 'public' ? 'Selm Chat' : 'Public Chat';
-        messageInput.placeholder = `Type your message for ${currentChatMode} chat...`;
-        loadChatHistory();
-    };
-
-    const loadChatHistory = () => {
-        chatMessages.innerHTML = '';
-        chatHistory[currentChatMode].forEach(message => appendMessage(currentChatMode, message));
-    };
-
     const toggleViewMode = () => {
         document.body.classList.toggle('dark-mode');
         viewModeButton.innerText = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
     };
+
+    // Initialize in dark mode
+    document.body.classList.add('dark-mode');
+    viewModeButton.innerText = 'Light Mode';
 
     sendButton.addEventListener('click', sendMessage);
     messageInput.addEventListener('keypress', (event) => {
@@ -82,6 +69,5 @@ export function initChat() {
     });
 
     fileUploadButton.addEventListener('click', () => fileInput.click());
-    switchChatButton.addEventListener('click', switchChatMode);
     viewModeButton.addEventListener('click', toggleViewMode);
 }
