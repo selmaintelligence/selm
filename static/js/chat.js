@@ -24,9 +24,12 @@ export function initChat() {
     };
 
     const handleMessage = async (message) => {
+        const isCommand = message.startsWith('.');
+        const trimmedMessage = message.trim();
+
         if (isCommand) {
             // Split the message into command name and arguments without removing the "."
-            const [commandName, ...commandArgs] = Message.split(' ');
+            const [commandName, ...commandArgs] = trimmedMessage.split(' ');
             const encodedArgs = encodeURIComponent(commandArgs.join(' '));
             const url = `https://selmai.pythonanywhere.com/?name=${encodeURIComponent(commandName)}&args=${encodedArgs}`;
 
