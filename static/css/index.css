@@ -15,6 +15,16 @@ body {
     flex-direction: column; /* Stack children vertically */
     width: 100vw; /* Full width of the viewport */
     overflow: hidden;
+    background: var(--background-gradient); /* Set background gradient from theme */
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+}
+
+/* Animated Gradient Background */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Main chat app container */
@@ -144,4 +154,70 @@ body.dark-mode #chat-input-container {
         flex: 1; /* Allow buttons to grow and fill the space */
         margin: 0; /* Remove margins between buttons */
     }
+}
+
+/* Custom Properties for Theming */
+:root {
+    /* Default Theme (Cool Blues) */
+    --background-gradient: linear-gradient(120deg, #084c61, #177e89, #b6c6e8, #6c91bf, #2e294e);
+    --neon-border-colors: linear-gradient(45deg, #00f5d4, #1b9aaa, #b6c6e8, #2e294e);
+    --particle-color: rgba(255, 255, 255, 0.6);
+    --neon-glow: rgba(0, 255, 212, 0.7), rgba(0, 185, 249, 0.5);
+}
+
+body.cool {
+    --background-gradient: linear-gradient(120deg, #084c61, #177e89, #b6c6e8, #6c91bf, #2e294e);
+    --neon-border-colors: linear-gradient(45deg, #00f5d4, #1b9aaa, #b6c6e8, #2e294e);
+    --particle-color: rgba(255, 255, 255, 0.6);
+    --neon-glow: rgba(0, 255, 212, 0.7), rgba(0, 185, 249, 0.5);
+}
+
+body.warm {
+    --background-gradient: linear-gradient(120deg, #ff7e5f, #feb47b, #ff6f91, #ff9671, #ffc75f);
+    --neon-border-colors: linear-gradient(45deg, #ff6f91, #feb47b, #ffc75f, #ff9671);
+    --particle-color: rgba(255, 255, 0, 0.6);
+    --neon-glow: rgba(255, 111, 145, 0.7), rgba(255, 184, 123, 0.5);
+}
+
+/* Glowing Neon Border */
+.neon-border {
+    position: absolute;
+    inset: 2%;
+    border: 4px solid transparent;
+    border-image: var(--neon-border-colors) 1;
+    border-radius: 15px;
+    box-shadow: 0 0 30px var(--neon-glow);
+    animation: neonPulse 4s linear infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% { box-shadow: 0 0 30px var(--neon-glow); }
+    50% { box-shadow: 0 0 50px var(--neon-glow); }
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 30px; /* Increased top padding */
+    right: 25px;
+    width: 50px; /* Set fixed width to make it a circle */
+    height: 50px; /* Set height equal to width */
+    padding: 0; /* Remove inner padding */
+    background: rgba(0, 0, 0, 0.3); /* Transparent circular button */
+    border: 2px solid white;
+    border-radius: 50%; /* Makes the button a circle */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content inside the circle */
+    transition: background 0.3s, transform 0.3s;
+}
+
+.theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.6); /* Darker background on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.theme-toggle svg {
+    fill: white; /* White fill for icon */
+    width: 24px; /* Icon size */
+    height: 24px;
 }
