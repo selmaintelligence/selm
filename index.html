@@ -37,7 +37,7 @@
     <!-- Title -->
     <title>Selm (Small Efficient Learning Model)</title>
 </head>
-<body class="cool"> <!-- Default theme can be 'cool' or 'warm' -->
+<body>
 
     <!-- Container for the entire chat application -->
     <div id="chat-app-container">
@@ -61,34 +61,20 @@
             <!-- Button container: holds all buttons below the input box -->
             <div id="chat-button-container">
                 <!-- Button for switching between light and dark mode -->
-                <button id="view-mode-button" class="chat-btn neon-border">Dark Mode</button>
+                <button id="view-mode-button" class="chat-btn">Dark Mode</button>
             
                 <!-- Button for file upload attachments -->
-                <button id="file-upload-button" class="chat-btn neon-border">Upload</button>
+                <button id="file-upload-button" class="chat-btn">Upload</button>
                 <input type="file" id="fileUpload" style="display: none;" />
             
                 <!-- Send button for sending the message -->
-                <button id="send-message-button" class="chat-btn neon-border">Send</button>
+                <button id="send-message-button" class="chat-btn">Send</button>
             </div>
 
-            <!-- Theme toggle button -->
-            <button id="theme-toggle" class="theme-toggle neon-border">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <path d="M12 1v2"></path>
-                    <path d="M12 21v2"></path>
-                    <path d="M4.22 4.22l1.42 1.42"></path>
-                    <path d="M18.36 18.36l1.42 1.42"></path>
-                    <path d="M1 12h2"></path>
-                    <path d="M21 12h2"></path>
-                    <path d="M4.22 19.78l1.42-1.42"></path>
-                    <path d="M18.36 5.64l1.42-1.42"></path>
-                </svg>
-            </button>
+
         </div>
 
     </div>
-
     <script type="module" src="static/js/index.js"></script>
 </body>
 </html>
